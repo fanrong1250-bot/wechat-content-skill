@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>图表 HTML 模板</title>
+  <script src="lib/react.production.min.js"></script>
+  <script src="lib/react-dom.production.min.js"></script>
+  <script src="lib/prop-types.min.js"></script>
+  <script src="lib/recharts.js"></script>
+  <script src="lib/babel.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      margin: 0;
+      padding: 40px 16px 80px;
+      color: #0f172a;
+    }
+    .page-header { max-width: 920px; margin: 0 auto 32px; padding: 0 16px; }
+    .page-header h1 { font-size: 30px; font-weight: 700; margin: 0 0 6px; }
+    .page-header p { font-size: 14px; color: #64748b; margin: 0; }
+    .chart-card {
+      background: white; border-radius: 16px; padding: 40px;
+      margin: 32px auto; max-width: 920px;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e2e8f0;
+    }
+    .chart-title { font-size: 22px; font-weight: 700; margin: 0 0 8px; color: #0f172a; }
+    .chart-subtitle { font-size: 14px; color: #64748b; margin: 0 0 28px; }
+
+    /* 通用提示框 */
+    .callout {
+      margin-top: 24px; padding: 16px 18px; border-radius: 6px;
+      font-size: 14px; line-height: 1.65; color: #334155;
+    }
+    .callout-blue { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .callout-blue strong { color: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <h1>图表模板示例</h1>
+    <p>这是 wechat-content-skill 生成的配图 HTML 模板示例。双击打开即可看到下面 2 张图。</p>
+  </div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } = Recharts;
+
+    function Chart1_LineExample() {
+      const data = [
+        { year: '2022', a: 60, b: 18 },
+        { year: '2023', a: 72, b: 41 },
+        { year: '2024', a: 85, b: 62 },
+        { year: '2025', a: 90, b: 78 },
+        { year: '2026', a: 92, b: 87 }
+      ];
+      return (
+        <ResponsiveContainer width="100%" height={320}>
+          <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="year" tick={{ fontSize: 14, fill: '#475569' }} />
+            <YAxis tick={{ fontSize: 13, fill: '#475569' }} domain={[0, 100]} />
+            <Tooltip contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 8, fontSize: 13 }} />
+            <Legend wrapperStyle={{ fontSize: 13, paddingTop: 12 }} />
+            <Line type="monotone" dataKey="a" name="第 1 名" stroke="#3b82f6" strokeWidth={2.5} dot={{ r: 5 }} />
+            <Line type="monotone" dataKey="b" name="第 5 名" stroke="#10b981" strokeWidth={2.5} dot={{ r: 5 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      );
+    }
+
+    function Chart2_BarExample() {
+      const data = [
+        { name: '左半边', value: 35 },
+        { name: '右半边', value: 65 }
+      ];
+      return (
+        <ResponsiveContainer width="100%" height={280}>
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <XAxis dataKey="name" tick={{ fontSize: 14, fill: '#475569' }} />
+            <YAxis tick={{ fontSize: 13, fill: '#475569' }} domain={[0, 100]} unit="%" />
+            <Tooltip contentStyle={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 8, fontSize: 13 }} />
+            <Bar dataKey="value" name="预算占比" fill="#10b981" radius={[8, 8, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <div className="chart-card">
+            <div className="chart-title">图表 1: 折线图示例</div>
+            <div className="chart-subtitle">展示对比趋势随时间的演变</div>
+            <Chart1_LineExample />
+          </div>
+          <div className="chart-card">
+            <div className="chart-title">图表 2: 柱状图示例</div>
+            <div className="chart-subtitle">展示两类的对比</div>
+            <Chart2_BarExample />
+            <div className="callout callout-blue">
+              <strong>提示：</strong> 用 React + Recharts 配合内联 CSS 即可生成纯离线、可双击打开的图表 HTML。复制本文件作为新文章的起点即可。
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
